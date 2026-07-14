@@ -1,0 +1,39 @@
+.app {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+}
+
+.header {
+  padding: 16px 0 24px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+}
+
+.main {
+  min-height: 200px;
+}
+
+.stateMessage {
+  padding: 48px 0;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.retryButton {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background: var(--accent-hover);
+}
