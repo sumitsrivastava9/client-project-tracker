@@ -2,7 +2,7 @@
 
 Small React dashboard built for the Digidel Solutions assessment. It pulls clients from the JSONPlaceholder API, lets you search them, open a detail view with that client's projects, and add new projects through a validated form.
 
-Live demo: link coming after deployment.
+Live demo: https://client-project-tracker-two.vercel.app
 
 ## Running it locally
 
