@@ -2,15 +2,26 @@ import { useFetch } from '../hooks/useFetch';
 import { projectsUrl } from '../api';
 import { getInitials } from '../utils';
 import { Modal } from './Modal';
-import type { Client, Project } from '../types';
+import type { Client, LocalProject, Project } from '../types';
 import styles from './ClientDetailModal.module.css';
 
 interface ClientDetailModalProps {
   client: Client;
+  localProjects: LocalProject[];
   onClose: () => void;
 }
 
-export function ClientDetailModal({ client, onClose }: ClientDetailModalProps) {
+const deadlineFormatter = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+
+export function ClientDetailModal({
+  client,
+  localProjects,
+  onClose,
+}: ClientDetailModalProps) {
   const projects = useFetch<Project[]>(projectsUrl(client.id));
 
   return (
@@ -61,9 +72,27 @@ export function ClientDetailModal({ client, onClose }: ClientDetailModalProps) {
         <h3 className={styles.projectsHeading}>
           Projects
           {projects.status === 'success' && (
-            <span className={styles.projectsCount}>{projects.data.length}</span>
+            <span className={styles.projectsCount}>
+              {projects.data.length + localProjects.length}
+            </span>
           )}
         </h3>
+
+        {localProjects.length > 0 && (
+          <ul className={styles.projectList}>
+            {localProjects.map((project) => (
+              <li key={`local-${project.id}`} className={styles.projectItem}>
+                <p className={styles.projectTitle}>
+                  {project.title}
+                  <span className={styles.newBadge}>New</span>
+                </p>
+                <p className={styles.projectBody}>
+                  Deadline: {deadlineFormatter.format(new Date(project.deadline))}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {projects.status === 'loading' && (
           <p className={styles.stateMessage}>Loading projects…</p>

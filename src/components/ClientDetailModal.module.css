@@ -93,11 +93,27 @@
 
 .projectList {
   list-style: none;
-  margin: 0;
+  margin: 0 0 10px;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.projectList:last-child {
+  margin-bottom: 0;
+}
+
+.newBadge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: rgba(64, 86, 199, 0.12);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  vertical-align: 1px;
 }
 
 .projectItem {

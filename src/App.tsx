@@ -1,18 +1,23 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useFetch } from './hooks/useFetch';
 import { clientsUrl } from './api';
 import { ClientCard } from './components/ClientCard';
 import { ClientDetailModal } from './components/ClientDetailModal';
+import { NewProjectForm, type NewProjectValues } from './components/NewProjectForm';
 import { SearchBar } from './components/SearchBar';
-import type { Client } from './types';
+import type { Client, LocalProject } from './types';
 import styles from './App.module.css';
 
 export default function App() {
   const clients = useFetch<Client[]>(clientsUrl);
   const [query, setQuery] = useState('');
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [localProjects, setLocalProjects] = useState<LocalProject[]>([]);
+  const nextProjectId = useRef(1);
 
   const closeDetail = useCallback(() => setSelectedClient(null), []);
+  const closeForm = useCallback(() => setIsFormOpen(false), []);
 
   const filteredClients = useMemo(() => {
     const list = clients.data ?? [];
@@ -25,6 +30,22 @@ export default function App() {
     );
   }, [clients.data, query]);
 
+  const handleCreateProject = useCallback((values: NewProjectValues) => {
+    setLocalProjects((prev) => [
+      ...prev,
+      { id: nextProjectId.current++, ...values },
+    ]);
+    setIsFormOpen(false);
+  }, []);
+
+  const selectedClientProjects = useMemo(
+    () =>
+      selectedClient === null
+        ? []
+        : localProjects.filter((project) => project.clientId === selectedClient.id),
+    [localProjects, selectedClient],
+  );
+
   return (
     <div className={styles.app}>
       <header className={styles.header}>
@@ -33,6 +54,14 @@ export default function App() {
 
       <div className={styles.toolbar}>
         <SearchBar value={query} onChange={setQuery} />
+        <button
+          type="button"
+          className={styles.newProjectButton}
+          onClick={() => setIsFormOpen(true)}
+          disabled={clients.status !== 'success'}
+        >
+          + New Project
+        </button>
       </div>
 
       <main className={styles.main}>
@@ -67,7 +96,19 @@ export default function App() {
       </main>
 
       {selectedClient !== null && (
-        <ClientDetailModal client={selectedClient} onClose={closeDetail} />
+        <ClientDetailModal
+          client={selectedClient}
+          localProjects={selectedClientProjects}
+          onClose={closeDetail}
+        />
+      )}
+
+      {isFormOpen && clients.status === 'success' && (
+        <NewProjectForm
+          clients={clients.data}
+          onSubmit={handleCreateProject}
+          onClose={closeForm}
+        />
       )}
     </div>
   );

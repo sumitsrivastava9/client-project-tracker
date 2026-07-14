@@ -11,8 +11,30 @@
 .toolbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   margin-bottom: 24px;
+}
+
+.newProjectButton {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.newProjectButton:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.newProjectButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .title {
