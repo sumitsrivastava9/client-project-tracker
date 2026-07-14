@@ -4,22 +4,28 @@ import styles from './ClientCard.module.css';
 
 interface ClientCardProps {
   client: Client;
+  onSelect: (client: Client) => void;
 }
 
-export function ClientCard({ client }: ClientCardProps) {
+export function ClientCard({ client, onSelect }: ClientCardProps) {
   return (
-    <article className={styles.card}>
+    <button
+      type="button"
+      className={styles.card}
+      onClick={() => onSelect(client)}
+      aria-label={`View details for ${client.name}`}
+    >
       <span className={styles.avatar} aria-hidden="true">
         {getInitials(client.name)}
       </span>
-      <div className={styles.identity}>
-        <h2 className={styles.name}>{client.name}</h2>
-        <p className={styles.company}>{client.company.name}</p>
-      </div>
-      <div className={styles.meta}>
-        <p className={styles.metaItem}>{client.email}</p>
-        <p className={styles.metaItem}>{client.address.city}</p>
-      </div>
-    </article>
+      <span className={styles.identity}>
+        <span className={styles.name}>{client.name}</span>
+        <span className={styles.company}>{client.company.name}</span>
+      </span>
+      <span className={styles.meta}>
+        <span className={styles.metaItem}>{client.email}</span>
+        <span className={styles.metaItem}>{client.address.city}</span>
+      </span>
+    </button>
   );
 }

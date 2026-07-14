@@ -4,6 +4,10 @@
    the name/company block, slight lift on hover. */
 
 .card {
+  width: 100%;
+  border: none;
+  font: inherit;
+  text-align: left;
   display: grid;
   grid-template-columns: 44px minmax(0, 1fr);
   grid-template-areas:
@@ -25,6 +29,11 @@
 .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .avatar {

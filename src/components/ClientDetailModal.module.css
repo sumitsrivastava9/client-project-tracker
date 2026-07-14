@@ -1,0 +1,146 @@
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--avatar-bg);
+  color: var(--avatar-text);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.company {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.catchPhrase {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--bg);
+}
+
+.detailRow {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 12px;
+  font-size: 13.5px;
+}
+
+.detailRow dt {
+  color: var(--text-muted);
+}
+
+.detailRow dd {
+  margin: 0;
+  color: var(--text);
+  overflow-wrap: break-word;
+}
+
+.detailRow a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.detailRow a:hover {
+  text-decoration: underline;
+}
+
+.projectsHeading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.projectsCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 11px;
+  background: var(--avatar-bg);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.projectList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.projectItem {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.projectTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.projectBody {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.stateMessage {
+  padding: 16px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.retryButton {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.retryButton:hover {
+  background: var(--accent-hover);
+}

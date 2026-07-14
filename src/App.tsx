@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useFetch } from './hooks/useFetch';
 import { clientsUrl } from './api';
 import { ClientCard } from './components/ClientCard';
+import { ClientDetailModal } from './components/ClientDetailModal';
 import { SearchBar } from './components/SearchBar';
 import type { Client } from './types';
 import styles from './App.module.css';
@@ -9,6 +10,9 @@ import styles from './App.module.css';
 export default function App() {
   const clients = useFetch<Client[]>(clientsUrl);
   const [query, setQuery] = useState('');
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+
+  const closeDetail = useCallback(() => setSelectedClient(null), []);
 
   const filteredClients = useMemo(() => {
     const list = clients.data ?? [];
@@ -55,12 +59,16 @@ export default function App() {
           <ul className={styles.grid}>
             {filteredClients.map((client) => (
               <li key={client.id}>
-                <ClientCard client={client} />
+                <ClientCard client={client} onSelect={setSelectedClient} />
               </li>
             ))}
           </ul>
         )}
       </main>
+
+      {selectedClient !== null && (
+        <ClientDetailModal client={selectedClient} onClose={closeDetail} />
+      )}
     </div>
   );
 }
