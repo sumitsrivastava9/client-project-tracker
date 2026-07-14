@@ -2,6 +2,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { useFetch } from './hooks/useFetch';
 import { clientsUrl } from './api';
 import { ClientCard } from './components/ClientCard';
+import { ClientCount } from './components/ClientCount';
 import { ClientDetailModal } from './components/ClientDetailModal';
 import { NewProjectForm, type NewProjectValues } from './components/NewProjectForm';
 import { SearchBar } from './components/SearchBar';
@@ -76,6 +77,10 @@ export default function App() {
               Try again
             </button>
           </div>
+        )}
+
+        {clients.status === 'success' && (
+          <ClientCount clients={clients.data} />
         )}
 
         {clients.status === 'success' && filteredClients.length === 0 && (
