@@ -1,5 +1,6 @@
 import { useFetch } from './hooks/useFetch';
 import { clientsUrl } from './api';
+import { ClientCard } from './components/ClientCard';
 import type { Client } from './types';
 import styles from './App.module.css';
 
@@ -27,9 +28,11 @@ export default function App() {
         )}
 
         {clients.status === 'success' && (
-          <ul>
+          <ul className={styles.grid}>
             {clients.data.map((client) => (
-              <li key={client.id}>{client.name}</li>
+              <li key={client.id}>
+                <ClientCard client={client} />
+              </li>
             ))}
           </ul>
         )}
