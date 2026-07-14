@@ -37,6 +37,29 @@
   cursor: not-allowed;
 }
 
+@media (max-width: 640px) {
+  .app {
+    padding: 12px 16px 32px;
+  }
+
+  .header {
+    padding: 8px 0 16px;
+  }
+
+  .title {
+    font-size: 19px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .newProjectButton {
+    width: 100%;
+  }
+}
+
 .title {
   font-size: 22px;
   font-weight: 700;
