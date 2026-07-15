@@ -6,6 +6,7 @@ import { ClientCount } from './components/ClientCount';
 import { ClientDetailModal } from './components/ClientDetailModal';
 import { NewProjectForm, type NewProjectValues } from './components/NewProjectForm';
 import { SearchBar } from './components/SearchBar';
+import { Toast } from './components/Toast';
 import type { Client, LocalProject } from './types';
 import styles from './App.module.css';
 
@@ -15,10 +16,12 @@ export default function App() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [localProjects, setLocalProjects] = useState<LocalProject[]>([]);
+  const [toast, setToast] = useState<string | null>(null);
   const nextProjectId = useRef(1);
 
   const closeDetail = useCallback(() => setSelectedClient(null), []);
   const closeForm = useCallback(() => setIsFormOpen(false), []);
+  const dismissToast = useCallback(() => setToast(null), []);
 
   const filteredClients = useMemo(() => {
     const list = clients.data ?? [];
@@ -31,13 +34,22 @@ export default function App() {
     );
   }, [clients.data, query]);
 
-  const handleCreateProject = useCallback((values: NewProjectValues) => {
-    setLocalProjects((prev) => [
-      ...prev,
-      { id: nextProjectId.current++, ...values },
-    ]);
-    setIsFormOpen(false);
-  }, []);
+  const handleCreateProject = useCallback(
+    (values: NewProjectValues) => {
+      setLocalProjects((prev) => [
+        ...prev,
+        { id: nextProjectId.current++, ...values },
+      ]);
+      setIsFormOpen(false);
+      const client = clients.data?.find((c) => c.id === values.clientId);
+      setToast(
+        client
+          ? `Project "${values.title}" added for ${client.name}.`
+          : `Project "${values.title}" added.`,
+      );
+    },
+    [clients.data],
+  );
 
   const selectedClientProjects = useMemo(
     () =>
@@ -115,6 +127,8 @@ export default function App() {
           onClose={closeForm}
         />
       )}
+
+      {toast !== null && <Toast message={toast} onDismiss={dismissToast} />}
     </div>
   );
 }
